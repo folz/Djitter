@@ -19,24 +19,7 @@
 <body>
 	<div id="wrapper">
 		<div id="header">
-			{% block header %}
-			<a href="{% url home %}">Home</a> | 
-	
-			{% if user.is_authenticated %}
-			Logged in: {{ user.username }} 
-	
-			(<a href="{% url auth_logout %}">Log out</a> | 
-	
-			<a href="{% url auth_password_change %}">Change password</a>)
-
-			<a href="{% url view user.username %}">My Profile</a> | 	
-			{% else %}
-	
-			<a href="{% url auth_login %}">Log in</a>
-			| 
-			{% endif %}
-			<hr />
-			{% endblock %}
+			{% block header %}{% endblock %}
 		</div>
 		<div id="content">
 			{% block content %}{% endblock %}
