@@ -6,7 +6,7 @@
 <title>Login | djitter</title>
 
 
-<form method="{% url auth_login %}" action=".">
+<form method="POST" action="{% url auth_login %}">
 	{% csrf_token %}
 	<table>{{ form.as_p }}</table>
 	<input type="submit" value="{% trans 'Log in' %}" />
