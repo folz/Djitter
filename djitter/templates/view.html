@@ -2,9 +2,11 @@
 
 {% block body %}
 
+<h1>{{ user.username }}</h1>
+
 <ul id="chirps">
 	{% for chirp in chirps %}
-		<li class="chirp">{{ chirp.user.username }} - {{ chirp.text }}</li>
+		<li class="chirp">{{ chirp.text }}</li>
 	{% endfor %}
 </ul>
 
