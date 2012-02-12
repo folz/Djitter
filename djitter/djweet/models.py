@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.forms import ModelForm
+from django.forms import ModelForm, CharField
 
 class Profile(models.Model):
 	""" A Profile keeps track of a User's information """
@@ -23,11 +23,11 @@ User.profile = property(lambda u: Profile.objects.get_or_create(user=u)[0])
 class Chirp(models.Model):
 	""" A Chirp is a status update from a User """
 	
-	user = models.ForeignKey(User, unique=True)
+	user = models.ForeignKey(User)
 	
-	text = models.CharField(max_length=140, blank=True, default="")
+	text = models.CharField(max_length=140, blank=False, default="")
 	
-	date_added = models.DateField(auto_now_add=True)
+	date_added = models.DateTimeField(auto_now_add=True)
 	
 	def __unicode__(self):
 		return str(self.user) + str(self.date_added)
@@ -45,7 +45,12 @@ class FollowManager(models.Model):
 
 # Makes use of Django's ModelForm to autogenerate a form for the profile.
 class ProfileForm(ModelForm):
-	
 	class Meta:
 		model = Profile
-		exclude = ('user')
+		exclude = ('user', 'following')
+		
+class ChirpForm(ModelForm):
+	text = CharField(label="Update status:")
+	class Meta:
+		model = Chirp
+		exclude = ('user',)

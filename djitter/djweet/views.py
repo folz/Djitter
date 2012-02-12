@@ -8,15 +8,16 @@ from djweet.models import *
 
 @login_required
 def home(req):
-	chirps = Chirp.objects.filter(user__id__in = req.user.profile.following.all).order_by('date_added')[:25]
+	chirps = Chirp.objects.filter(user__id__in = req.user.profile.following.all).order_by('-date_added')[:50]
 	return render_to_response("index.html",
 			{ 'chirps': chirps
+			  , 'chirper': ChirpForm()
 			}
 		, context_instance = RequestContext(req))
 
 def view(req, username):
 	user = User.objects.get(username=username)
-	chirps = Chirp.objects.filter(user=user).order_by('date_added')[:15]
+	chirps = Chirp.objects.filter(user=user).order_by('-date_added')[:25]
 	
 	if req.user.is_authenticated():
 		is_following = user in req.user.profile.following.all()
@@ -26,6 +27,7 @@ def view(req, username):
 	return render_to_response('view.html',
 			{ 'user': user
 			, 'chirps': chirps
+			, 'chirper': ChirpForm()
 			, 'follow': 'Unfollow' if is_following else 'Follow'
 			, 'mine': req.user == user
 			}
@@ -45,8 +47,10 @@ def edit(req):
 @login_required
 def cheep(req):
 	if req.method == 'POST':
-		chirp = Chirp(user = req.user, text = req['text'])
+		chirp = Chirp(user = req.user, text = req.POST['text'])
 		chirp.save()
+		return redirect('home')
+	return redirect('home')
 
 @login_required
 def follow(req, username):
@@ -58,7 +62,7 @@ def follow(req, username):
 		else:
 			req.user.profile.following.add(user)
 		
-	return redirect('home')
+	return redirect('view', username)
 
 def back_to_home(req):
 	# Maps accounts/profile back to home (we don't use it)

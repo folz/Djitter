@@ -10,17 +10,24 @@
 	<li>Name: {{ user.profile.name }}</li>
 	<li>Joined: {{ user.profile.date_added }}</li>
 	{% if mine %}
-		<a href = "url edit">Edit</a>
+		<a href="{% url edit %}">Edit</a>
+		<form action="{% url cheep %}?origin=view" method="POST">
+			{{ chirper }}
+			<input type="submit" value="Chirp!" />
+			{% csrf_token %}
+		</form>
+	{% else %}
+		<form action="{% url follow user.username %}" method="POST">
+			<input type="submit" value="{{ follow }} {{ user.username }}" />
+			{% csrf_token %}
+		</form>
 	{% endif %}
 </ul>
 
 <h3>Recent chirps:</h3>
 <ul id="chirps">
 	{% for chirp in chirps %}
-		<li class="chirp">
-			<a href="{% url view chirp.user.username %}">{{ chirp.user.username }}</a>
-			<p>{{ chirp.text }}</p>
-		</li>
+		<li class="chirp"> <b>{{ chirp.date_added }}</b> | {{ chirp.text }}</li>
 	{% endfor %}
 </ul>
 
@@ -39,17 +46,6 @@
 		<li class = "follower">
 			<a href = "{% url view follower.user.username %}">{{ follower.user.username }}</a>
 		</li>
-	{% endfor %}
-</ul>
-
-<form action="{% url follow user.username %}" method="POST">
-	<input type="submit" value="{{ follow }} {{ user.username }}" />
-	{% csrf_token %}
-</form>
-
-<ul id="chirps">
-	{% for chirp in chirps %}
-		<li class="chirp">{{ chirp.text }}</li>
 	{% endfor %}
 </ul>
 
