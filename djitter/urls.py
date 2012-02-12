@@ -9,8 +9,8 @@ urlpatterns = patterns('',
 	url(r'^$', 'djweet.views.index', name='index'),
 	url(r'editprofile/$', 'djweet.views.edit_profile', name='edit'),
 	url(r'publish/$', 'djweet.views.publish_chirp', name='publish'),
-	url(r'follow/(\d+)/$', 'djweet.views.follow_user', name='follow'),
-	url(r'unfollow/(\d+)/$', 'djweet.views.unfollow_user', name='unfollow'),
+	url(r'follow/(?P<user>\w+)/$', 'djweet.views.follow_user', name='follow'),
+	url(r'unfollow/(?P<user>\w+)/$', 'djweet.views.unfollow_user', name='unfollow'),
 	url(r'(?P<user>\w+)/?$', 'djweet.views.view_profile', name='profile'),
 	
 	# Django-Registration
