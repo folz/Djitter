@@ -50,10 +50,11 @@ def edit(req):
 			return redirect('view', req.user.username)
 	else:
 		form = ProfileForm(instance=Profile.objects.get(user=req.user))
-	return render_to_response('EditProfile.html', { 'form':form
-												  , 'chirper': ChirpForm()
-												  }
-												  , context_instance=RequestContext(req))
+	return render_to_response('EditProfile.html',
+			{ 'form': form
+			, 'chirper': ChirpForm()
+			}
+		, context_instance=RequestContext(req))
 
 @login_required
 def cheep(req):
