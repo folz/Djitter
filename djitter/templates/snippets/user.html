@@ -1,7 +1,7 @@
 {% load djittertags %}
 <li class="chirp">
 	<a href="{% url view viewing.username %}">
-		<img src="{% gravatar_url viewing.email 48 %}" class="pull-left" />
+		<img src="{% gravatar user.email 48 %}" class="pull-left avatar" />
 		<strong>{{ user.profile.name }}</strong>
 		<span class="username">@{{ user.username }}</span>
 	</a>

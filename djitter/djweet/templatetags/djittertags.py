@@ -16,8 +16,8 @@ class GravatarNode(template.Node):
 		return url
 		
 
-def gravatar_url(parser, token):
+def gravatar(parser, token):
 	email, size = token.split_contents()[1:]	
 	return GravatarNode(email, size)
 
-gravatar_url = register.tag(gravatar_url)
+gravatar = register.tag(gravatar)

@@ -2,7 +2,7 @@
 <li class="chirp">
 	<small class="time pull-right">{{ chirp.date_added }}</small>
 	<a href="{% url view chirp.user.username %}">
-		<img src="{% gravatar_url chirp.user.email 48 %}" class="pull-left" />
+		<img src="{% gravatar chirp.user.email 48 %}" class="pull-left avatar" />
 		<strong>{{ chirp.user.profile.name }}</strong>
 		<span class="username">@{{ chirp.user.username }}</span>
 	</a>
