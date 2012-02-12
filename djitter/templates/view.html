@@ -4,6 +4,11 @@
 
 <h1>{{ user.username }}</h1>
 
+<form action="{% url follow user.username %}" method="POST">
+	<input type="submit" value="{{ follow }} {{ user.username }}" />
+	{% csrf_token %}
+</form>
+
 <ul id="chirps">
 	{% for chirp in chirps %}
 		<li class="chirp">{{ chirp.text }}</li>

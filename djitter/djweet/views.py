@@ -17,9 +17,17 @@ def home(req):
 def view(req, username):
 	user = User.objects.get(username=username)
 	chirps = Chirp.objects.filter(user=user)
+	
+	if req.user.is_authenticated():
+		is_following = user in req.user.profile.following.all()
+	else:
+		is_following = False
+	
+	
 	return render_to_response('view.html',
 			{ 'user': user
 			, 'chirps': chirps
+			, 'follow': 'Unfollow' if is_following else 'Follow'
 			}
 		, context_instance = RequestContext(req))
 
@@ -41,14 +49,16 @@ def publish_chirp(req):
 		chirp.save()
 
 @login_required
-def follow_user(req, user):
+def follow(req, username):
 	if req.method == "POST":
-		req.user.following.add(User.objects.get(username=UID))
-
-@login_required
-def unfollow_user(req, user):
-	if req.method == "POST":
-		req.user.following.remove(User.objects.get(usernam=UID))
+		user = User.objects.get(username=username)
+		
+		if user in req.user.profile.following.all():
+			req.user.profile.following.remove(user)
+		else:
+			req.user.profile.following.add(user)
+		
+	return redirect('home')
 
 def back_to_home(req):
 	# Maps accounts/profile back to home (we don't use it)
