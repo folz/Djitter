@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block content %}
+{% block title %}{{ block.super }} / Logged Out {% endblock %}
 
-<title>Logged out | djitter</title>
+{% block content %}
 
 <p>{% trans "Logged out" %}</p>
 {% endblock %}
