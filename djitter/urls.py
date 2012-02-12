@@ -14,7 +14,7 @@ urlpatterns = patterns('',
 	
 	url(r'edit/$', 'djweet.views.edit', name='edit'),
 	
-	url(r'publish/$', 'djweet.views.publish_chirp', name='publish'),
+	url(r'publish/$', 'djweet.views.cheep', name='cheep'),
 	
 	url(r'follow/(?P<username>\w+)/$', 'djweet.views.follow', name='follow'),
 	

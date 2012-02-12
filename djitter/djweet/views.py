@@ -43,7 +43,7 @@ def edit(req):
 	return render_to_response('EditProfile.html', {'form':form}, context_instance=RequestContext(req))
 
 @login_required
-def publish_chirp(req):
+def cheep(req):
 	if req.method == 'POST':
 		chirp = Chirp(user = req.user, text = req['text'])
 		chirp.save()
