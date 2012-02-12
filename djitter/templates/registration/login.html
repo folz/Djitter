@@ -2,9 +2,9 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block content %}
-<title>Login | djitter</title>
+{% block title %}{{ block.super }} / Login{% endblock %}
 
+{% block content %}
 
 <form method="POST" action="{% url auth_login %}">
 	{% csrf_token %}
