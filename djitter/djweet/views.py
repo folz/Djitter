@@ -20,8 +20,11 @@ def index(request):
 
 
 # View a user's profile.
-	user = User.objects.get(id=UID)
 def view_profile(request, user):
+	if request.path[-1] == '/':
+		return redirect(request.path[:-1])
+
+	user = User.objects.get(username=user)
 	chirps = user.chirp_set.all()
 	return render_to_response('ViewProfile.html', { 'username': user.username,
 													'profile': user.profile,
