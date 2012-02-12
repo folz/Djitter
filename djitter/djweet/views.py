@@ -1,6 +1,6 @@
-# Create your views here.
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import redirect, render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext, Template, Context
 
 from models import *
