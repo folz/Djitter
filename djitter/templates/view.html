@@ -1,5 +1,7 @@
 {% extends "loggedin.html" %}
 
+{% block title %}{{ user.get_full_name }} ({{ user.username }}) on {{ block.super }}{% endblock %}
+
 {% block body %}
 
 <h1>{{ user.username }}</h1>
