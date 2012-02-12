@@ -30,18 +30,22 @@ class Chirp(models.Model):
 	date_added = models.DateField(auto_now_add=True)
 	
 	def __unicode__(self):
-		return self.user + self.date_added
+		return str(self.user) + str(self.date_added)
 
 
 # Not necessary, but useful in demonstrating manager models
 class FollowManager(models.Model):
+	
 	follower = models.ForeignKey(Profile)
+	
 	followee = models.ForeignKey(User)
+	
 	date_added = models.DateField(auto_now_add=True)
 	
 
 # Makes use of Django's ModelForm to autogenerate a form for the profile.
 class ProfileForm(ModelForm):
+	
 	class Meta:
 		model = Profile
 		exclude = ('user')
