@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, redirect
@@ -41,28 +42,24 @@ def edit_profile(req):
 		form = ProfileForm(req.POST, instance=Profile.objects.get(user=req.user))
 		if form.is_valid():
 			form.save()
-			return HttpResponseRedirect('/profile/'+str(req.user.id))
+			return redirect(reverse('profile', user=req.user))
 	else:
 		form = ProfileForm()
 	return render_to_response('EditProfile.html', {'form':form}, context_instance=RequestContext(req))
-	
 
 # Publish a chirp.
 def publish_chirp(req):
 	if req.method == 'POST':
 		chirp = Chirp(user = req.user, text = req['text'])
 		chirp.save()
-		
-		
+
 # Follow a user. No checks against following yourself;
 # Users have the choice of whether to see their own chirps in the feed.
 def follow_user(req, user):
 	if req.method == "POST":
 		req.user.following.add(User.objects.get(username=UID))
-		
 
 # Unfollow a user.
 def unfollow_user(req, user):
 	if req.method == "POST":
 		req.user.following.remove(User.objects.get(usernam=UID))
-		
