@@ -1,4 +1,5 @@
 from django.core.urlresolvers import reverse
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, redirect
@@ -55,9 +56,10 @@ def follow(req, username):
 		
 		if user in req.user.profile.following.all():
 			req.user.profile.following.remove(user)
+			messages.add_message(req, messages.INFO, '''You stopped following {}.'''.format(user.get_full_name()))
 		else:
 			req.user.profile.following.add(user)
-		
+			messages.add_message(req, messages.INFO, '''You're now following {}.'''.format(user.get_full_name()))
 	return redirect('home')
 
 def back_to_home(req):
