@@ -6,62 +6,50 @@ from django.template import RequestContext, Template, Context
 
 from djweet.models import *
 
-# If the user is logged in, the homepage shows the 25 most recent chirps.
-# Otherwise, show the welcome page.
-def index(req):
-	if req.user.is_authenticated():
-		user = User.objects.get(id=UID)
-		chirps = Chirp.objects.filter(user__id__in = user.following).order_by('date_added')[:25]
-		return render_to_response("index.html",
-				{ 'username': user.username
-				, 'chirps': chirps
-				, 'following': user.following
-				}
-			, context_instance = RequestContext(req))
-	else:
-		return render_to_response("welcome.html", context_instance = RequestContext(req))
-
-# View a user's profile.
-def view_profile(req, user):
-	if req.path[-1] == '/':
-		return redirect(req.path[:-1])
-	
-	user = User.objects.get(username=user)
-	chirps = user.chirp_set.all()
-	return render_to_response('ViewProfile.html',
-			{ 'username': user.username
-			, 'profile': user.profile
-			, 'mine': (user == req.user)
-			, 'chirps': chirps
-			, 'following': user.profile.following.all()
-			, 'followers': user.follower_set.all()
+@login_required
+def home(req):
+	chirps = Chirp.objects.filter(user__id__in = req.user.profile.following.all).order_by('date_added')[:25]
+	return render_to_response("index.html",
+			{ 'chirps': chirps
 			}
 		, context_instance = RequestContext(req))
 
-# Edit your profile.
-def edit_profile(req):
+def view(req, username):
+	user = User.objects.get(username=username)
+	chirps = Chirp.objects.filter(user=user)
+	return render_to_response('view.html',
+			{ 'user': user
+			, 'chirps': chirps
+			}
+		, context_instance = RequestContext(req))
+
+@login_required
+def edit(req):
 	if req.method == 'POST':
 		form = ProfileForm(req.POST, instance=Profile.objects.get(user=req.user))
 		if form.is_valid():
 			form.save()
-			return redirect(reverse('profile', user=req.user))
+			return redirect(reverse('view', user=req.user))
 	else:
 		form = ProfileForm()
 	return render_to_response('EditProfile.html', {'form':form}, context_instance=RequestContext(req))
 
-# Publish a chirp.
+@login_required
 def publish_chirp(req):
 	if req.method == 'POST':
 		chirp = Chirp(user = req.user, text = req['text'])
 		chirp.save()
 
-# Follow a user. No checks against following yourself;
-# Users have the choice of whether to see their own chirps in the feed.
+@login_required
 def follow_user(req, user):
 	if req.method == "POST":
 		req.user.following.add(User.objects.get(username=UID))
 
-# Unfollow a user.
+@login_required
 def unfollow_user(req, user):
 	if req.method == "POST":
 		req.user.following.remove(User.objects.get(usernam=UID))
+
+def back_to_home(req):
+	# Maps accounts/profile back to home (we don't use it)
+	return redirect('home')
