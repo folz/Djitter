@@ -16,9 +16,7 @@ urlpatterns = patterns('',
 	
 	url(r'publish/$', 'djweet.views.publish_chirp', name='publish'),
 	
-	url(r'follow/(?P<username>\w+)/$', 'djweet.views.follow_user', name='follow'),
-	
-	url(r'unfollow/(?P<username>\w+)/$', 'djweet.views.unfollow_user', name='unfollow'),
+	url(r'follow/(?P<username>\w+)/$', 'djweet.views.follow', name='follow'),
 	
 	
 	# django-registration
