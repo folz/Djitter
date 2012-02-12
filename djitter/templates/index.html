@@ -4,13 +4,25 @@
 
 {% block content %}
 
-<ul id="chirps">
-	{% for chirp in chirps %}
-		<li class="chirp">
-			<a href="{% url view chirp.user.username %}">{{ chirp.user.username }}</a>
-			<p>{{ chirp.text }}</p>
-		</li>
-	{% endfor %}
-</ul>
+<div class="row">
+	<div class="span3 offset1">
+		<p>{{ user.get_full_name }}</p>
+	</div>
+	<div class="span6">
+		<ul id="chirps">
+			{% for chirp in chirps %}
+				<li class="chirp">
+					<div class="chirp-header">
+						<small class="time pull-right">{{ chirp.date_added }}</small>
+						<a href="{% url view chirp.user.username %}">
+							<strong>{{ chirp.user.get_full_name }}</strong>
+							<span class="username">@{{ chirp.user.username }}</span>
+						</a>
+					<p>{{ chirp.text }}</p>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
 
 {% endblock %}
