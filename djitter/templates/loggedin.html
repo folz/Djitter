@@ -2,53 +2,40 @@
 
 {% block nav %}
 
-<div class="navbar navbar-fixed-top">
-	<div class="navbar-inner">
-		<div class="container">
-			<a class="brand" href="{% url home %}">Djitter</a>
-			<ul class="nav">
-				<li class="active"><a href="{% url home %}">Home</a></li>
-				<li><a href="#">Connect</a></li>
-				<li><a href="#">Discover</a></li>
-			</ul> <!-- .nav -->
-			{% if user.is_authenticated %}
-			<ul class="nav pull-right">
-				<li class="dropdown">
-					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-						<i class="icon-user icon-white"></i>
-						{{ user.username }}
-						<strong class="caret"></strong>
-					</a>
-					<ul class="dropdown-menu">
-						<li>
-							<a href="{% url view user.username %}"><strong>{{ user.get_full_name }}</strong><br />View my profile page</a>
-						</li>
-						<li class="divider"></li>
-						<li>
-							<a href="{% url edit %}">Settings</a>
-						</li>
-						<li><a href="{% url auth_password_change %}">Change password</a>
-						</li>
-						<li>
-							<a href="{% url auth_logout %}">Log out</a>
-						</li>
-					</ul> <!-- .dropdown-menu -->
-				</li> <!-- .dropdown -->
-			</ul> <!-- .nav.pull-right -->
-			{% else %}
-	
-			<a href="{% url auth_login %}">Log in</a>
-			{% endif %}
-		</div> <!-- .container-fluid -->
-	</div> <!-- .navbar-inner -->
-</div> <!-- .navbar.navbar-fixed-top -->
-
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+<ul class="nav pull-right">
+	<li class="dropdown">
+		<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+			<i class="icon-user icon-white"></i>
+			{{ user.username }}
+			<strong class="caret"></strong>
+		</a>
+		<ul class="dropdown-menu">
+			<li>
+				<a href="{% url view user.username %}"><strong>{{ user.get_full_name }}</strong><br />View my profile page</a>
+			</li>
+			<li class="divider"></li>
+			<li>
+				<a href="{% url edit %}">Edit Profile</a>
+			</li>
+			<li><a href="{% url auth_password_change %}">Change password</a>
+			</li>
+			<li>
+				<a href="{% url auth_logout %}">Log out</a>
+			</li>
+		</ul> <!-- .dropdown-menu -->
+	</li> <!-- .dropdown -->
+	<li class="dropdown">
+		<a class="dropdown-toggle" data-toggle="dropdown" href="#">Chirp</a>
+		<ul class="dropdown-menu">
+			<li>
+				<form action="{% url cheep %}" method="POST">
+				{{ chirper }}
+				<input type="submit" value="Chirp!" />
+				{% csrf_token %}
+				</form>
+			</li>
+		</ul>
+	</li>
+</ul> <!-- .nav.pull-right -->
 
 {% endblock %}

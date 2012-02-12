@@ -20,7 +20,6 @@
 <body>
 	<div id="wrapper">
 		<div id="header">
-			{% block header %}
 			<div class="navbar navbar-fixed-top">
 				<div class="navbar-inner">
 					<div class="container">
@@ -29,52 +28,14 @@
 							<li class="active"><a href="{% url home %}">Home</a></li>
 							<li><a href="{% url connect %}">@ Connect</a></li>
 							<li><a href="#"># Discover</a></li>
-							</ul> <!-- .nav -->
-						{% if user.is_authenticated %}
-						<ul class="nav pull-right">
-							<li class="dropdown">
-								<a class="dropdown-toggle" data-toggle="dropdown" href="#">Chirp</a>
-								<ul class="dropdown-menu">
-									<li>
-										<form action="{% url cheep %}" method="POST">
-										{{ chirper }}
-										<input type="submit" value="Chirp!" />
-										{% csrf_token %}
-										</form>
-									</li>
-								</ul>
-							</li>
-						</ul>
-						<ul class="nav pull-right">
-							<li class="dropdown">
-								<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-									<i class="icon-user icon-white"></i>
-									{{ user.username }}
-									<strong class="caret"></strong>
-								</a>
-								<ul class="dropdown-menu">
-									<li>
-										<a href="{% url view user.username %}"><strong>{{ user.get_full_name }}</strong><br />View my profile page</a>
-									</li>
-									<li class="divider"></li>
-									<li>
-										<a href="{% url edit %}">Edit Profile</a>
-									</li>
-									<li><a href="{% url auth_password_change %}">Change password</a>
-									</li>
-									<li>
-										<a href="{% url auth_logout %}">Log out</a>
-									</li>
-								</ul> <!-- .dropdown-menu -->
-							</li> <!-- .dropdown -->
-						</ul> <!-- .nav.pull-right -->
-						{% else %}
-						<ul class="nav pull-right">
-							<li><a href="{% url auth_login %}">Log in</a></li> 
-							<li><a href="{% url registration_register %}">Register</a></li>
-						</ul>
-						{% endif %}
-					</div> <!-- .container-fluid -->
+						</ul> <!-- .nav -->
+						{% block nav %}
+							<ul class="nav pull-right">
+								<li><a href="{% url auth_login %}">Log in</a></li> 
+								<li><a href="{% url registration_register %}">Register</a></li>
+							</ul>
+						{% endblock %}
+					</div> <!-- .container -->
 				</div> <!-- .navbar-inner -->
 			</div> <!-- .navbar.navbar-fixed-top -->
 			{% if messages %}
@@ -84,7 +45,6 @@
 				{% endfor %}
 				</ul>
 			{% endif %}
-			{% endblock %}
 		</div>
 		<div id="content" class="container">
 			{% block content %}{% endblock %}
