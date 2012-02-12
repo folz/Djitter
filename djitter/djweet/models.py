@@ -1,4 +1,7 @@
 from django.db import models
+
+# Create your models here.
+from django.db import models
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 
@@ -10,7 +13,7 @@ class Profile(models.Model):
 	following = models.ManyToManyField(User, related_name = "follower")
 	
 	def __unicode__(self):
-        return self.name
+		return self.name
 # If user doesn't have a profile yet, autocreate one!
 User.profile = property(lambda u: Profile.objects.get_or_create(user=u)[0])
 
@@ -22,9 +25,9 @@ class Chirp(models.Model):
 	date_added = models.DateField(auto_now_add=True)
 	
 	def __unicode__(self):
-        return self.user + self.date_added
-        
-        
+		return self.user + self.date_added
+		
+		
 # Not necessary, but useful in demonstrating manager models
 class FollowManager(models.Model):
 	follower = models.ForeignKey(Profile)
@@ -34,10 +37,6 @@ class FollowManager(models.Model):
 
 # Makes use of Django's ModelForm to autogenerate a form for the profile.
 class ProfileForm(ModelForm):
-    class Meta:
-        model = Profile
-        exclude = ('user')
-       
-        
-
-
+	class Meta:
+		model = Profile
+		exclude = ('user')

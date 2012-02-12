@@ -1,3 +1,4 @@
+# Create your views here.
 from django.http import HttpResponse, HttpResponseRedirect
 from models import *
 from django.shortcuts import render_to_response
@@ -33,14 +34,14 @@ def ViewProfile(request, UID):
 # Edit your profile.
 def EditProfile(request):
 	if request.method == 'POST':
-        form = ProfileForm(request.POST, instance=Profile.objects.get(user=request.user))
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/profile/'+str(request.user.id))
-    else:
-        form = ProfileForm()
-    return render_to_response('EditProfile.html', {'form':form}, context_instance=RequestContext(request))
-    
+		form = ProfileForm(request.POST, instance=Profile.objects.get(user=request.user))
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect('/profile/'+str(request.user.id))
+	else:
+		form = ProfileForm()
+	return render_to_response('EditProfile.html', {'form':form}, context_instance=RequestContext(request))
+	
 
 # Publish a chirp.
 def PublishChirp(request):
