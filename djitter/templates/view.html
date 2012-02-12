@@ -1,4 +1,5 @@
-{% extends "base.html" %}
+{% extends "loggedin.html" %}
+{% load i18n %}
 {% load djittertags %}
 
 {% block title %}{{ viewing.profile.name }} ({{ viewing.username }}) on {{ block.super }}{% endblock %}
