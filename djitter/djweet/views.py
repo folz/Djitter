@@ -59,9 +59,9 @@ def edit(req):
 @login_required
 def cheep(req):
 	if req.method == 'POST':
-		chirp = Chirp(user = req.user, text = req.POST['text'])
-		chirp.save()
-		return redirect('home')
+		if req.POST['text'] != "":
+			chirp = Chirp(user = req.user, text = req.POST['text'])
+			chirp.save()
 	return redirect('home')
 
 @login_required
