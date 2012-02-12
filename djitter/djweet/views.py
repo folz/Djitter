@@ -39,7 +39,7 @@ def edit(req):
 		form = ProfileForm(req.POST, instance=Profile.objects.get(user=req.user))
 		if form.is_valid():
 			form.save()
-			return redirect(reverse('view', user=req.user))
+			return redirect('view', req.user.username)
 	else:
 		form = ProfileForm()
 	return render_to_response('EditProfile.html', {'form':form}, context_instance=RequestContext(req))

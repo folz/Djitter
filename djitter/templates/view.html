@@ -11,7 +11,7 @@
 	<li>Joined: {{ user.profile.date_added }}</li>
 	{% if mine %}
 		<a href="{% url edit %}">Edit</a>
-		<form action="{% url cheep %}?origin=view" method="POST">
+		<form action="{% url cheep %}" method="POST">
 			{{ chirper }}
 			<input type="submit" value="Chirp!" />
 			{% csrf_token %}
