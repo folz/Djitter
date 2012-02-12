@@ -5,18 +5,32 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-	# Djitter (?P<link>.{40})
-	url(r'^$', 'djweet.views.index', name='index'),
-	url(r'editprofile/$', 'djweet.views.edit_profile', name='edit'),
-	url(r'publish/$', 'djweet.views.publish_chirp', name='publish'),
-	url(r'follow/(?P<user>\w+)/$', 'djweet.views.follow_user', name='follow'),
-	url(r'unfollow/(?P<user>\w+)/$', 'djweet.views.unfollow_user', name='unfollow'),
-	url(r'(?P<user>\w+)/?$', 'djweet.views.view_profile', name='profile'),
 	
-	# Django-Registration
+	# Djitter (?P<link>.{40})
+	
+	url(r'^$', 'djweet.views.home', name='home'),
+	
+	url(r'(?P<username>\w+)$', 'djweet.views.view', name='view'),
+	
+	url(r'edit/$', 'djweet.views.edit', name='edit'),
+	
+	url(r'publish/$', 'djweet.views.publish_chirp', name='publish'),
+	
+	url(r'follow/(?P<username>\w+)/$', 'djweet.views.follow_user', name='follow'),
+	
+	url(r'unfollow/(?P<username>\w+)/$', 'djweet.views.unfollow_user', name='unfollow'),
+	
+	
+	# django-registration
+	
 	url(r'^accounts/', include('registration.urls')),
 	
+	url(r'^accounts/profile/$', 'djweet.views.back_to_home', name='redir'),
+	
+	
 	# Django Admin
+	
 	url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+	
 	url(r'^admin/', include(admin.site.urls)),
 )
