@@ -7,62 +7,62 @@ from models import *
 
 # If the user is logged in, the homepage shows the 25 most recent chirps.
 # Otherwise, show the welcome page.
-def index(request):
-	if request.user.is_authenticated():
+def index(req):
+	if req.user.is_authenticated():
 		user = User.objects.get(id=UID)
 		chirps = Chirp.objects.filter(user__id__in = user.following).order_by('date_added')[:25]
 		return render_to_response("index.html", {'username': user.username,
 												 'chirps': chirps,
 												 'following': user.following,},
-												 context_instance = RequestContext(request))
+												 context_instance = RequestContext(req))
 	else:
-		return render_to_response("welcome.html", context_instance = RequestContext(request))
+		return render_to_response("welcome.html", context_instance = RequestContext(req))
 
 
 # View a user's profile.
-def view_profile(request, user):
-	if request.path[-1] == '/':
-		return redirect(request.path[:-1])
+def view_profile(req, user):
+	if req.path[-1] == '/':
+		return redirect(req.path[:-1])
 
 	user = User.objects.get(username=user)
 	chirps = user.chirp_set.all()
 	return render_to_response('ViewProfile.html', { 'username': user.username,
 													'profile': user.profile,
-													'mine': (user == request.user),
+													'mine': (user == req.user),
 													'chirps': chirps, 
 													'following': user.profile.following.all(),
 													'followers': user.follower_set.all()},
-													context_instance = RequestContext(request))
+													context_instance = RequestContext(req))
 								
 
 # Edit your profile.
-def edit_profile(request):
-	if request.method == 'POST':
-		form = ProfileForm(request.POST, instance=Profile.objects.get(user=request.user))
+def edit_profile(req):
+	if req.method == 'POST':
+		form = ProfileForm(req.POST, instance=Profile.objects.get(user=req.user))
 		if form.is_valid():
 			form.save()
-			return HttpResponseRedirect('/profile/'+str(request.user.id))
+			return HttpResponseRedirect('/profile/'+str(req.user.id))
 	else:
 		form = ProfileForm()
-	return render_to_response('EditProfile.html', {'form':form}, context_instance=RequestContext(request))
+	return render_to_response('EditProfile.html', {'form':form}, context_instance=RequestContext(req))
 	
 
 # Publish a chirp.
-def publish_chirp(request):
-	if request.method == 'POST':
-		chirp = Chirp(user = request.user, text = request['text'])
+def publish_chirp(req):
+	if req.method == 'POST':
+		chirp = Chirp(user = req.user, text = req['text'])
 		chirp.save()
 		
 		
 # Follow a user. No checks against following yourself;
 # Users have the choice of whether to see their own chirps in the feed.
-def follow_user(request, UID):
-	if request.method == "POST":
-		request.user.following.add(User.objects.get(id=UID))
+def follow_user(req, user):
+	if req.method == "POST":
+		req.user.following.add(User.objects.get(username=UID))
 		
 
 # Unfollow a user.
-def unfollow_user(request, UID):
-	if request.method == "POST":
-		request.user.following.remove(User.objects.get(id=UID))
+def unfollow_user(req, user):
+	if req.method == "POST":
+		req.user.following.remove(User.objects.get(usernam=UID))
 		
