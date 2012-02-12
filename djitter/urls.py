@@ -18,6 +18,8 @@ urlpatterns = patterns('',
 	
 	url(r'follow/(?P<username>\w+)/$', 'djweet.views.follow', name='follow'),
 	
+	url(r'connect/$', 'djweet.views.connect', name='connect'),
+	
 	
 	# django-registration
 	

@@ -1,0 +1,16 @@
+{% load djittertags %}
+<li class="chirp">
+	<a href="{% url view viewing.username %}">
+		<img src="{% gravatar_url viewing.email 48 %}" class="pull-left" />
+		<strong>{{ user.profile.name }}</strong>
+		<span class="username">@{{ user.username }}</span>
+	</a>
+	{% if viewing == user %}
+		<a class="pull-right btn" href="{% url view user.username %}">My profile</a>
+	{% else %}
+		<a class="pull-right btn{% if viewing in user.profile.following.all %}-primary{% endif %}" href="{% url follow viewing.username %}">
+			{% if viewing in user.profile.following.all %}Unfollow{% else %}Follow{%endif %}
+		</a>
+	{% endif %}
+	<p>{{ user.profile.bio }}</p>
+</li>

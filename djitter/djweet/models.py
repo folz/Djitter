@@ -22,11 +22,8 @@ User.profile = property(lambda u: Profile.objects.get_or_create(user=u)[0])
 
 class Chirp(models.Model):
 	""" A Chirp is a status update from a User """
-	
 	user = models.ForeignKey(User)
-	
 	text = models.CharField(max_length=140, blank=False, default="")
-	
 	date_added = models.DateTimeField(auto_now_add=True)
 	
 	def __unicode__(self):

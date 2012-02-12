@@ -30,7 +30,7 @@
 					{% csrf_token %}
 					</form>
 				{% else %}
-					<a class="btn{% if following %}-primary{% endif %}" href="{% url follow viewing.username %}">{% if following %}Following{% else %}Follow{%endif %}</a>
+					<a class="btn{% if following %}-primary{% endif %}" href="{% url follow viewing.username %}">{% if following %}Unfollow{% else %}Follow{%endif %}</a>
 				{% endif %}
 			</div>
 		</div> <!-- .row -->

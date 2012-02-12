@@ -15,7 +15,12 @@ def home(req):
 											}
 											, context_instance = RequestContext(req))
 		
-
+def connect(req):
+	users = User.objects.all()
+	return render_to_response("connect.html", { 'users': users
+											  , 'chirper': ChirpForm()
+											  }
+											  , context_instance = RequestContext(req))
 
 def view(req, username):
 	user = User.objects.get(username=username)
