@@ -1,8 +1,9 @@
 # Create your views here.
 from django.http import HttpResponse, HttpResponseRedirect
-from models import *
-from django.shortcuts import render_to_response
+from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext, Template, Context
+
+from models import *
 
 # If the user is logged in, the homepage shows the 25 most recent chirps.
 # Otherwise, show the welcome page.
