@@ -6,7 +6,7 @@ from django.template import RequestContext, Template, Context
 
 # If the user is logged in, the homepage shows the 25 most recent chirps.
 # Otherwise, show the welcome page.
-def Index(request):
+def index(request):
 	if request.user.is_authenticated():
 		user = User.objects.get(id=UID)
 		chirps = Chirp.objects.filter(user__id__in = user.following).order_by('date_added')[:25]
@@ -19,8 +19,8 @@ def Index(request):
 
 
 # View a user's profile.
-def ViewProfile(request, UID):
 	user = User.objects.get(id=UID)
+def view_profile(request, user):
 	chirps = user.chirp_set.all()
 	return render_to_response('ViewProfile.html', { 'username': user.username,
 													'profile': user.profile,
@@ -32,7 +32,7 @@ def ViewProfile(request, UID):
 								
 
 # Edit your profile.
-def EditProfile(request):
+def edit_profile(request):
 	if request.method == 'POST':
 		form = ProfileForm(request.POST, instance=Profile.objects.get(user=request.user))
 		if form.is_valid():
@@ -44,7 +44,7 @@ def EditProfile(request):
 	
 
 # Publish a chirp.
-def PublishChirp(request):
+def publish_chirp(request):
 	if request.method == 'POST':
 		chirp = Chirp(user = request.user, text = request['text'])
 		chirp.save()
@@ -52,13 +52,13 @@ def PublishChirp(request):
 		
 # Follow a user. No checks against following yourself;
 # Users have the choice of whether to see their own chirps in the feed.
-def FollowUser(request, UID):
+def follow_user(request, UID):
 	if request.method == "POST":
 		request.user.following.add(User.objects.get(id=UID))
 		
 
 # Unfollow a user.
-def UnfollowUser(request, UID):
+def unfollow_user(request, UID):
 	if request.method == "POST":
 		request.user.following.remove(User.objects.get(id=UID))
 		
