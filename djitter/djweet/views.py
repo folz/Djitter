@@ -6,7 +6,7 @@ from django.template import RequestContext, Template, Context
 
 from djweet.models import *
 
-
+@login_required
 def home(req):
 	chirps = Chirp.objects.filter(user__id__in = req.user.profile.following.all).order_by('date_added')[:25]
 	return render_to_response("index.html",
