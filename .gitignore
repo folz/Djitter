@@ -3,3 +3,5 @@ venv
 ~
 .geany
 database.db
+.svn/
+*.geany
