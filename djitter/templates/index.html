@@ -10,16 +10,11 @@
 	</div>
 	<div class="span6">
 		<ul id="chirps">
+			<li class="chirp-header">
+				<h3>Chirps</h3>
+			</li>
 			{% for chirp in chirps %}
-				<li class="chirp">
-					<div class="chirp-header">
-						<small class="time pull-right">{{ chirp.date_added }}</small>
-						<a href="{% url view chirp.user.username %}">
-							<strong>{{ chirp.user.get_full_name }}</strong>
-							<span class="username">@{{ chirp.user.username }}</span>
-						</a>
-					<p>{{ chirp.text }}</p>
-				</li>
+				{% include "snippets/chirp.html" %}
 			{% endfor %}
 		</ul>
 	</div>
