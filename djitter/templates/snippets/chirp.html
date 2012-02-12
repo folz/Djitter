@@ -1,0 +1,9 @@
+
+<li class="chirp">
+	<small class="time pull-right">{{ chirp.date_added }}</small>
+	<a href="{% url view chirp.user.username %}">
+		<strong>{{ chirp.user.get_full_name }}</strong>
+		<span class="username">@{{ chirp.user.username }}</span>
+	</a>
+	<p>{{ chirp.text }}</p>
+</li>

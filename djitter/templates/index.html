@@ -1,18 +1,23 @@
-<!DOCTYPE html>
 {% extends "base.html" %}
-{% load i18n %}
 
 {% block title %}{{ block.super }} / Home{% endblock %}
 
 {% block content %}
 
-<ul id="chirps">
-	{% for chirp in chirps %}
-		<li class="chirp">
-			<a href="{% url view chirp.user.username %}">{{ chirp.user.username }}</a>
-			<p>{{ chirp.text }}</p>
-		</li>
-	{% endfor %}
-</ul>
+<div class="row">
+	<div class="span3 offset1 well">
+		<p>{{ user.get_full_name }}</p>
+	</div>
+	<div class="span6">
+		<ul id="chirps" class="unstyled">
+			<li class="chirp-header">
+				<h3>Chirps</h3>
+			</li>
+			{% for chirp in chirps %}
+				{% include "snippets/chirp.html" %}
+			{% endfor %}
+		</ul>
+	</div>
+</div>
 
 {% endblock %}

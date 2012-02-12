@@ -1,39 +1,51 @@
 {% extends "base.html" %}
-{% load i18n %}
 
-{% block title %}{{ user.get_full_name }} ({{ user.username }}) on {{ block.super }}{% endblock %}
+{% block title %}{{ viewing.profile.name }} ({{ viewing.username }}) on {{ block.super }}{% endblock %}
 
 {% block content %}
 
-<h2>{{ user.username }}'s Profile</h2>
-<ul id="profile">
-	<li>Name: {{ user.profile.name }}</li>
-	<li>Joined: {{ user.profile.date_added }}</li>
-	{% if mine %}
-		<a href="{% url edit %}">Edit</a>
-		<form action="{% url cheep %}" method="POST">
-			{{ chirper }}
-			<input type="submit" value="Chirp!" />
-			{% csrf_token %}
-		</form>
-	{% else %}
-		<form action="{% url follow user.username %}" method="POST">
-			<input type="submit" value="{{ follow }} {{ user.username }}" />
-			{% csrf_token %}
-		</form>
-	{% endif %}
-</ul>
+<div class="row">
+	<div class="span10 offset1">
+		<div class="row">
+			<div class="span8">
+				<img src="http://placehold.it/128x128" class="pull-left" />
+				
+				<h1 class="fullname">{{ viewing.profile.name }}</h1>
+				<h2 class="username">@{{ viewing.username }}</h2>
+				<p class="bio">{{ viewing.profile.bio }}</p>
+				<p class="joined">Joined: {{ viewing.profile.date_added }}</p>
+				<p class="location-and-url">
+					<span class="location">{{ viewing.profile.location }}</span>
+					<span class="divider">·</span>
+					<span class="url">{{ viewing.profile.url}}</span>
+				</p>
+			</div> <!-- .span8 -->
+			<div class="pull-right">
+				{% if mine %}
+					<a class="btn" href="{% url edit %}">Edit your profile</a>
+					<form action="{% url cheep %}" method="POST">
+					{{ chirper }}
+					<input type="submit" value="Chirp!" />
+					{% csrf_token %}
+					</form>
+				{% else %}
+					<a class="btn{% if following %}-primary{% endif %}" href="{% url follow viewing.username %}">{% if following %}Following{% else %}Follow{%endif %}</a>
+				{% endif %}
+			</div>
+		</div> <!-- .row -->
+	</div> <!-- .span10.offset1 -->
+</div> <!-- .row -->
 
 <h3>Recent chirps:</h3>
-<ul id="chirps">
+<ul id="chirps" class="unstyled">
 	{% for chirp in chirps %}
-		<li class="chirp"> <b>{{ chirp.date_added }}</b> | {{ chirp.text }}</li>
+		{% include "snippets/chirp.html" %}
 	{% endfor %}
 </ul>
 
 <h3>Following:</h3>
 <ul id="following">
-	{% for followee in user.profile.following.all %}
+	{% for followee in viewing.profile.following.all %}
 		<li class = "followee">
 			<a href = "{% url view followee.username %}">{{ followee.username }}</a>
 		</li>
@@ -42,7 +54,7 @@
 
 <h3>Followers:</h3>
 <ul id="followers">
-	{% for follower in user.profile_set.all %}
+	{% for follower in viewing.followers.all %}
 		<li class = "follower">
 			<a href = "{% url view follower.user.username %}">{{ follower.user.username }}</a>
 		</li>

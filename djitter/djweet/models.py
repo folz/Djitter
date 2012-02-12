@@ -6,12 +6,12 @@ class Profile(models.Model):
 	""" A Profile keeps track of a User's information """
 	
 	user = models.ForeignKey(User, unique=True)
-	
 	name = models.CharField(max_length=30, blank=True, default="")
-	
+	bio = models.TextField(max_length=200, blank=True, default="")
+	location = models.CharField(max_length=30, blank=True, default="")
+	url = models.CharField(max_length=100, blank=True, default="")
 	date_added = models.DateField(auto_now_add=True)
-	
-	following = models.ManyToManyField(User, related_name = "follower")
+	following = models.ManyToManyField(User, related_name = "followers")
 	
 	def __unicode__(self):
 		return self.name
