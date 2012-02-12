@@ -16,18 +16,18 @@ def home(req):
 
 def view(req, username):
 	user = User.objects.get(username=username)
-	chirps = Chirp.objects.filter(user=user)
+	chirps = Chirp.objects.filter(user=user).order_by('date_added')[:15]
 	
 	if req.user.is_authenticated():
 		is_following = user in req.user.profile.following.all()
 	else:
 		is_following = False
 	
-	
 	return render_to_response('view.html',
 			{ 'user': user
 			, 'chirps': chirps
 			, 'follow': 'Unfollow' if is_following else 'Follow'
+			, 'mine': req.user == user
 			}
 		, context_instance = RequestContext(req))
 

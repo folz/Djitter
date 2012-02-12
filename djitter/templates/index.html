@@ -1,8 +1,10 @@
-{% extends "loggedin.html" %}
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load i18n %}
 
 {% block title %}{{ block.super }} / Home{% endblock %}
 
-{% block body %}
+{% block content %}
 
 <ul id="chirps">
 	{% for chirp in chirps %}

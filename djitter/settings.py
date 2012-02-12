@@ -7,6 +7,19 @@ CURRENT_DIRECTORY = os.getcwdu()
 THEME_DIRECTORY = os.path.join(CURRENT_DIRECTORY, "djitter/templates")
 STATIC_DIRECTORY = os.path.join(CURRENT_DIRECTORY, "djitter/static")
 
+# Django registration settings
+ACCOUNT_ACTIVATION_DAYS = 5
+AUTH_PROFILE_MODULE = "djweet.models.Profile"
+LOGIN_REDIRECT_URL = '/'
+
+# Email server settings
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'djitter.hack@gmail.com'
+EMAIL_HOST_PASSWORD = 'allhailh@b'
+DEFAULT_FROM_EMAIL = 'djitter.hack@gmail.com'
+EMAIL_PORT = 587
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )

@@ -1,10 +1,46 @@
-{% extends "loggedin.html" %}
+{% extends "base.html" %}
+{% load i18n %}
 
 {% block title %}{{ user.get_full_name }} ({{ user.username }}) on {{ block.super }}{% endblock %}
 
-{% block body %}
+{% block content %}
 
-<h1>{{ user.username }}</h1>
+<h2>{{ user.username }}'s Profile</h2>
+<ul id="profile">
+	<li>Name: {{ user.profile.name }}</li>
+	<li>Joined: {{ user.profile.date_added }}</li>
+	{% if mine %}
+		<a href = "url edit">Edit</a>
+	{% endif %}
+</ul>
+
+<h3>Recent chirps:</h3>
+<ul id="chirps">
+	{% for chirp in chirps %}
+		<li class="chirp">
+			<a href="{% url view chirp.user.username %}">{{ chirp.user.username }}</a>
+			<p>{{ chirp.text }}</p>
+		</li>
+	{% endfor %}
+</ul>
+
+<h3>Following:</h3>
+<ul id="following">
+	{% for followee in user.profile.following.all %}
+		<li class = "followee">
+			<a href = "{% url view followee.username %}">{{ followee.username }}</a>
+		</li>
+	{% endfor %}
+</ul>
+
+<h3>Followers:</h3>
+<ul id="followers">
+	{% for follower in user.profile_set.all %}
+		<li class = "follower">
+			<a href = "{% url view follower.user.username %}">{{ follower.user.username }}</a>
+		</li>
+	{% endfor %}
+</ul>
 
 <form action="{% url follow user.username %}" method="POST">
 	<input type="submit" value="{{ follow }} {{ user.username }}" />

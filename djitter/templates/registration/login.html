@@ -1,9 +1,18 @@
+<!DOCTYPE html>
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block body %}
-	<form action="{% url auth_login %}" method="post" id="login">
-		{{ form.as_p }}
-		{% csrf_token %}
-		<p><input type="submit" value="Log in"></p>
-	</form>
+{% block content %}
+<title>Login | djitter</title>
+
+
+<form method="{% url auth_login %}" action=".">
+	{% csrf_token %}
+	<table>{{ form.as_p }}</table>
+	<input type="submit" value="{% trans 'Log in' %}" />
+	<input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+<p>{% trans "Forgot password" %}? <a href="{% url auth_password_reset %}">{% trans "Reset it" %}</a>!</p>
+<p>{% trans "Not member" %}? <a href="{% url registration_register %}">{% trans "Register" %}</a>!</p>
 {% endblock %}
