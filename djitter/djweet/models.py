@@ -41,7 +41,7 @@ class FollowManager(models.Model):
 	followee = models.ForeignKey(User)
 	
 	date_added = models.DateField(auto_now_add=True)
-	
+
 
 # Makes use of Django's ModelForm to autogenerate a form for the profile.
 class ProfileForm(ModelForm):

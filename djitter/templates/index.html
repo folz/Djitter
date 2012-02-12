@@ -4,7 +4,10 @@
 
 <ul id="chirps">
 	{% for chirp in chirps %}
-		<li class="chirp">{{ chirp.user.username }} - {{ chirp.text }}</li>
+		<li class="chirp">
+			<a href="{% url view chirp.user.username %}">{{ chirp.user.username }}</a>
+			<p>{{ chirp.text }}</p>
+		</li>
 	{% endfor %}
 </ul>
 
