@@ -14,7 +14,7 @@ urlpatterns = patterns('',
 	url(r'unfollow/(\d+)/$', 'djweet.views.UnfollowUser', name='unfollow'),
 	
 	# Django-Registration
-	url(r'^accounts/', include('registration.backends.default.urls')),
+	url(r'^accounts/', include('registration.urls')),
 	
 	# Django Admin
 	url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
