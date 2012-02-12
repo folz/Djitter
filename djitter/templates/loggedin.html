@@ -24,18 +24,32 @@
 			</li>
 		</ul> <!-- .dropdown-menu -->
 	</li> <!-- .dropdown -->
-	<li class="dropdown">
-		<a class="dropdown-toggle" data-toggle="dropdown" href="#">Chirp</a>
-		<ul class="dropdown-menu">
-			<li>
-				<form action="{% url cheep %}" method="POST">
-				{{ chirper }}
-				<input type="submit" value="Chirp!" />
-				{% csrf_token %}
-				</form>
-			</li>
-		</ul>
+	<li>
+		<a data-toggle="modal" href="#chirp">Chirp</a>
 	</li>
 </ul> <!-- .nav.pull-right -->
+
+{% endblock %}
+
+{% block modal %}
+
+
+<div class="modal hide fade in" id="chirp">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">x</a>
+		<h3>What's happening?</h3>
+	</div>
+	<div class="modal-body">
+		<form action="{% url cheep %}" method="POST">
+			{{ chirper }}
+			<input type="submit" value="Chirp!" />
+			{% csrf_token %}
+		</form>
+	</div>
+	<div class="modal-footer">
+		<a class="btn btn-primary" href="#">Chirp</a>
+		<a class="btn" data-dismiss="modal" href="#">Close</a>
+	</div>
+</div>
 
 {% endblock %}

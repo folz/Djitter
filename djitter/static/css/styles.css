@@ -55,3 +55,8 @@ h2.username
 {
 	padding-right: 9px;
 }
+
+.modal-backdrop.fade.in
+{
+	opacity: 0.3;
+}
