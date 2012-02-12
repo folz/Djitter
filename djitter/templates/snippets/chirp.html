@@ -1,5 +1,6 @@
-
+{% load djittertags %}
 <li class="chirp">
+	<img src="{% gravatar_url chirp.user.email 48 %}" class="pull-left" />
 	<small class="time pull-right">{{ chirp.date_added }}</small>
 	<a href="{% url view chirp.user.username %}">
 		<strong>{{ chirp.user.get_full_name }}</strong>

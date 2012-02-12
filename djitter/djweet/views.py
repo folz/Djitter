@@ -10,11 +10,12 @@ from djweet.models import *
 @login_required
 def home(req):
 	chirps = Chirp.objects.filter(user__in = list(req.user.profile.following.all()) + [req.user]).order_by('-date_added')
-	return render_to_response("index.html",
-			{ 'chirps': chirps
-			  , 'chirper': ChirpForm()
-			}
-		, context_instance = RequestContext(req))
+	return render_to_response("index.html", { 'chirps': chirps
+											, 'chirper': ChirpForm()
+											}
+											, context_instance = RequestContext(req))
+		
+
 
 def view(req, username):
 	user = User.objects.get(username=username)
@@ -63,10 +64,10 @@ def follow(req, username):
 		
 	if user in req.user.profile.following.all():
 		req.user.profile.following.remove(user)
-		messages.add_message(req, messages.INFO, '''You stopped following {}.'''.format(user.get_full_name()))
+		messages.add_message(req, messages.INFO, '''You stopped following {}.'''.format(user.username))
 	else:
 		req.user.profile.following.add(user)
-		messages.add_message(req, messages.INFO, '''You're now following {}.'''.format(user.get_full_name()))
+		messages.add_message(req, messages.INFO, '''You're now following {}.'''.format(user.username))
 	return redirect('view', username)
 
 def back_to_home(req):

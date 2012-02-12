@@ -35,11 +35,8 @@ class Chirp(models.Model):
 
 # Not necessary, but useful in demonstrating manager models
 class FollowManager(models.Model):
-	
 	follower = models.ForeignKey(Profile)
-	
 	followee = models.ForeignKey(User)
-	
 	date_added = models.DateField(auto_now_add=True)
 
 
