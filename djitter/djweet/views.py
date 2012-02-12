@@ -12,29 +12,31 @@ def index(req):
 	if req.user.is_authenticated():
 		user = User.objects.get(id=UID)
 		chirps = Chirp.objects.filter(user__id__in = user.following).order_by('date_added')[:25]
-		return render_to_response("index.html", {'username': user.username,
-												 'chirps': chirps,
-												 'following': user.following,},
-												 context_instance = RequestContext(req))
+		return render_to_response("index.html",
+				{ 'username': user.username
+				, 'chirps': chirps
+				, 'following': user.following
+				}
+			, context_instance = RequestContext(req))
 	else:
 		return render_to_response("welcome.html", context_instance = RequestContext(req))
-
 
 # View a user's profile.
 def view_profile(req, user):
 	if req.path[-1] == '/':
 		return redirect(req.path[:-1])
-
+	
 	user = User.objects.get(username=user)
 	chirps = user.chirp_set.all()
-	return render_to_response('ViewProfile.html', { 'username': user.username,
-													'profile': user.profile,
-													'mine': (user == req.user),
-													'chirps': chirps, 
-													'following': user.profile.following.all(),
-													'followers': user.follower_set.all()},
-													context_instance = RequestContext(req))
-								
+	return render_to_response('ViewProfile.html',
+			{ 'username': user.username
+			, 'profile': user.profile
+			, 'mine': (user == req.user)
+			, 'chirps': chirps
+			, 'following': user.profile.following.all()
+			, 'followers': user.follower_set.all()
+			}
+		, context_instance = RequestContext(req))
 
 # Edit your profile.
 def edit_profile(req):
