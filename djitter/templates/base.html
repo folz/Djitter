@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 
 <head>
-	<title>{% block title %}Djitter{% endblock %}</title>
+	<title>{% block title %}djitter{% endblock %}</title>
 	
 	<meta charset="utf-8">
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
@@ -17,11 +17,28 @@
 
 <body>
 	<div id="wrapper">
-		<header>
-			{% block header %}{% endblock %}
-		</header>
+		<div id="header">
+			{% block header %}
+			<a href="{% url home %}">Home</a> | 
+	
+			{% if user.is_authenticated %}
+			Logged in: {{ user.username }} 
+	
+			(<a href="{% url auth_logout %}">Log out</a> | 
+	
+			<a href="{% url auth_password_change %}">Change password</a>)
+
+			<a href="{% url view user.username %}">My Profile</a> | 	
+			{% else %}
+	
+			<a href="{% url auth_login %}">Log in</a>
+			| 
+			{% endif %}
+			<hr />
+			{% endblock %}
+		</div>
 		<div id="content">
-			{% block body %}{% endblock %}
+			{% block content %}{% endblock %}
 		</div>
 		<footer>
 			<em>Go beyond the impossible and kick reason to the curb!</em>

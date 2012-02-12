@@ -1,6 +1,8 @@
-{% extends "loggedin.html" %}
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load i18n %}
 
-{% block body %}
+{% block content %}
 
 <ul id="chirps">
 	{% for chirp in chirps %}
