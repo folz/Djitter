@@ -6,11 +6,11 @@
 
 <div class="row">
 	<div class="span8">
-		<ul id="chirps" class="unstyled">
-			<li class="chirp-header">
+		<ul id="users" class="unstyled">
+			<li class="user-header">
 				<h3>Users</h3>
 			</li>
-			{% for viewing in users %}
+			{% for user in users %}
 				{% include "snippets/user.html" %}
 			{% endfor %}
 		</ul>

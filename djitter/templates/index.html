@@ -13,11 +13,10 @@
 			{% csrf_token %}
 		</form>
 	</div>
-	<div class="span6">
+	<div class="span6 well">
+		<h3>Chirps</h3>
 		<ul id="chirps" class="unstyled">
-			<li class="chirp-header">
-				<h3>Chirps</h3>
-			</li>
+			<li class="chirp-header"></li>
 			{% for chirp in chirps %}
 				{% include "snippets/chirp.html" %}
 			{% endfor %}

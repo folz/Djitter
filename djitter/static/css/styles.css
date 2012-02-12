@@ -3,7 +3,29 @@ html
 	padding-top: 60px;
 }
 
-.chirp
+h2.username
+{
+	color: #555;
+}
+
+.bio
+{
+	font-style: italic;
+}
+
+.view-followering
+{
+	margin-left: 0;
+	margin-right: 20px;
+}
+
+.view-chirps
+{
+	margin-left: 20px;
+	margin-right: 0;
+}
+
+.chirp, .user
 {
 	background-color: #f5f5f5;
 	padding: 9px 12px;
@@ -12,9 +34,24 @@ html
 	border-top: none;
 }
 
-.chirp-header
+.chirp-header, .user-header
 {
 	background-color: #f5f5f5;
 	padding: 0 12px;
 	border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.well
+{
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.avatar
+{
+	padding-right: 19px;
+}
+
+.user .avatar, .chirp .avatar
+{
+	padding-right: 9px;
 }

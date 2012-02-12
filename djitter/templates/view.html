@@ -8,59 +8,73 @@
 
 <div class="row">
 	<div class="span10 offset1">
-		<div class="row">
-			<div class="span8">
+		<div class="row well">
+			<div class="span7">
 				<img src="{% gravatar viewing.email 128 %}" class="avatar pull-left" />
 				
 				<h1 class="fullname">{{ viewing.profile.name }}</h1>
 				<h2 class="username">@{{ viewing.username }}</h2>
+				
 				<p class="bio">{{ viewing.profile.bio }}</p>
-				<p class="joined">Joined: {{ viewing.profile.date_added }}</p>
 				<p class="location-and-url">
 					<span class="location">{{ viewing.profile.location }}</span>
 					<span class="divider">·</span>
 					<span class="url">{{ viewing.profile.url}}</span>
 				</p>
-			</div> <!-- .span8 -->
-			<div class="pull-right">
+			</div> <!-- .span7 -->
+			<div class="span2 pull-right">
 				{% if mine %}
 					<a class="btn" href="{% url edit %}">Edit your profile</a>
-					<form action="{% url cheep %}" method="POST">
-					{{ chirper }}
-					<input type="submit" value="Chirp!" />
-					{% csrf_token %}
-					</form>
 				{% else %}
-					<a class="btn{% if following %}-primary{% endif %}" href="{% url follow viewing.username %}">{% if following %}Unfollow{% else %}Follow{%endif %}</a>
+					<a class="btn {% if following %}btn-primary{% endif %}" href="{% url follow viewing.username %}">
+						{% if following %}
+							{% trans "Unfollow" %}
+						{% else %}
+							{% trans "Follow" %}
+						{%endif %}
+					</a>
 				{% endif %}
+			</div> <!-- .span1 -->
+		</div> <!-- .row -->
+		<div class="row">
+			<div class="span4 view-followering pull-left">
+				<div class="sidebar-nav">
+					<div class="well">
+						<h3>Following:</h3>
+						<ul id="following">
+							{% for followee in viewing.profile.following.all %}
+								<li class = "followee">
+									<a href = "{% url view followee.username %}">{{ followee.username }}</a>
+								</li>
+							{% endfor %}
+						</ul>
+					</div>	
+					<div class="well">
+						<h3>Followers:</h3>
+						<ul id="followers">
+							{% for follower in viewing.followers.all %}
+								<li class = "follower">
+									<a href = "{% url view follower.user.username %}">{{ follower.user.username }}</a>
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="span6 view-chirps">
+				<div class="row well">
+					<h3>Chirps</h3>
+					<ul id="chirps" class="unstyled">
+						<li class="chirp-header"></li>
+						{% for chirp in chirps %}
+							{% include "snippets/chirp.html" %}
+						{% endfor %}
+					</ul>
+				</div>
 			</div>
 		</div> <!-- .row -->
 	</div> <!-- .span10.offset1 -->
 </div> <!-- .row -->
 
-<h3>Recent chirps:</h3>
-<ul id="chirps" class="unstyled">
-	{% for chirp in chirps %}
-		{% include "snippets/chirp.html" %}
-	{% endfor %}
-</ul>
-
-<h3>Following:</h3>
-<ul id="following">
-	{% for followee in viewing.profile.following.all %}
-		<li class = "followee">
-			<a href = "{% url view followee.username %}">{{ followee.username }}</a>
-		</li>
-	{% endfor %}
-</ul>
-
-<h3>Followers:</h3>
-<ul id="followers">
-	{% for follower in viewing.followers.all %}
-		<li class = "follower">
-			<a href = "{% url view follower.user.username %}">{{ follower.user.username }}</a>
-		</li>
-	{% endfor %}
-</ul>
 
 {% endblock %}
