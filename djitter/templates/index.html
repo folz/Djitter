@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<ul id="chirps">
+	{% for chirp in chirps %}
+		<li class="chirp">{{ chirp.user.username }} - {{ chirp.text }}</li>
+	{% endfor %}
+</ul>
+
+{% endblock %}

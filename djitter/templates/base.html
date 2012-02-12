@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+	<title>{% block title %}Djitter{% endblock %}</title>
+	
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	
+	<link rel="icon" type="image/png" href="favicon.png" />
+	
+	<script type="text/javascript" src="{{ STATIC_URL }}js/head.min.js"></script>
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="{{ STATIC_URL }}css/reset.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="{{ STATIC_URL }}css/styles.css" />
+</head>
+
+<body>
+	<div id="wrapper">
+		<header>
+		</header>
+		<div id="content">
+			{% block body %}{% endblock %}
+		</div>
+		<footer>
+			<em>Go beyond the impossible and kick reason to the curb!</em>
+		</footer>
+	</div> <!-- #wrapper -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+	head.js('https://ajax.microsoft.com/ajax/jquery/jquery-1.7.1.min.js', '/static/init.js');
+</script>
+</body>
+
+</html>
