@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext, Template, Context
 
-from models import *
+from djweet.models import *
 
 # If the user is logged in, the homepage shows the 25 most recent chirps.
 # Otherwise, show the welcome page.
