@@ -15,7 +15,8 @@ def home(req):
 			, 'chirper': ChirpForm()
 			}
 		, context_instance = RequestContext(req))
-		
+
+@login_required
 def connect(req):
 	users = User.objects.all()
 	return render_to_response("connect.html",
