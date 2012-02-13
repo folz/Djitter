@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block content %}
+{% block title %}{{ block.super }} Registered{% endblock %}
 
-<title>Activation pending | djitter</title>
+{% block content %}
 
 <p>{% trans "You are now registered. Activation email sent." %}</p>
 {% endblock %}

@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% load i18n %}
 
+{% block title %}{{ block.super }} Activated!{% endblock %}
+
 {% block content %}
 
-<title>Activated! | djitter</title>
-
 <p>{% trans "Activation complete." %}</p>
+
 {% endblock %}
