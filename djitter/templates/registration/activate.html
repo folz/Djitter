@@ -9,12 +9,12 @@
 
 <p>{% trans "Account successfully activated" %}</p>
 
-<p><a href="{% url auth_login %}">{% trans "Log in" %}</a></p>
-
 {% else %}
 
-<p>{% trans "Account activation failed" %}</p>
+<p>{% trans "You've already activated your account!" %}</p>
 
 {% endif %}
+
+<p><a href="{% url auth_login %}">{% trans "Log in" %}</a></p>
 
 {% endblock %}
