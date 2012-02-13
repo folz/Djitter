@@ -10,7 +10,7 @@
 	<div class="span10 offset1">
 		<div class="row well">
 			<div class="span7">
-				<a href="http://gravatar.com/emails/">
+				<a href="{% if viewing == user %}http://gravatar.com/emails/{% else %}#{% endif %}">
 					<img src="{% gravatar viewing.email 128 %}" class="avatar pull-left" />
 				</a>
 				
