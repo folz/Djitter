@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{{ block.super }} Register{% endblock %}
+{% block title %}{{ block.super }} / Register{% endblock %}
 
 {% block content %}
 
 <form method="post" action=".">
 	{% csrf_token %}
-	<table>{{ form.as_p }}</table>
+	{{ form.as_p }}
   <input type="submit" value="{% trans 'Submit' %}" />
 </form>
 
