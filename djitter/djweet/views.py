@@ -10,17 +10,19 @@ from djweet.models import *
 @login_required
 def home(req):
 	chirps = Chirp.objects.filter(user__in = list(req.user.profile.following.all()) + [req.user]).order_by('-date_added')
-	return render_to_response("index.html", { 'chirps': chirps
-											, 'chirper': ChirpForm()
-											}
-											, context_instance = RequestContext(req))
+	return render_to_response("index.html",
+			{ 'chirps': chirps
+			, 'chirper': ChirpForm()
+			}
+		, context_instance = RequestContext(req))
 		
 def connect(req):
 	users = User.objects.all()
-	return render_to_response("connect.html", { 'users': users
-											  , 'chirper': ChirpForm()
-											  }
-											  , context_instance = RequestContext(req))
+	return render_to_response("connect.html",
+			{ 'users': users
+			, 'chirper': ChirpForm()
+			}
+		, context_instance = RequestContext(req))
 
 def view(req, username):
 	user = User.objects.get(username=username)
