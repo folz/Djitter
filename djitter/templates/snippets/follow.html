@@ -1,5 +1,5 @@
 {% if user == viewing %}
-	<a class="pull-right btn" href="{% url view user.username %}">My profile</a>
+	<a class="pull-right btn btn-success" href="{% url view user.username %}">This is you!</a>
 {% else %}
 	<form method="POST" action="{% url follow viewing.username %}" class="pull-right">
 		{% csrf_token %}
