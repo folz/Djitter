@@ -1,6 +1,8 @@
-{% load i18n %}
-{% trans "Activate account at" %} {{ site.name }}:
+Welcome to {{ site.name }}! Please verify your email by clicking on the following link:
 
 http://{{ site.domain }}{% url registration_activate activation_key %}
 
-{% blocktrans %}Link is valid for {{ expiration_days }} days.{% endblocktrans %}
+This link is valid for the next {{ expiration_days }} days.
+
+Love,
+{{ site.name }}Bot
