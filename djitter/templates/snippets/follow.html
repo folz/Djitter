@@ -1,0 +1,13 @@
+{% if user == viewing %}
+	<a class="pull-right btn" href="{% url view user.username %}">My profile</a>
+{% else %}
+	<form method="POST" action="{% url follow viewing.username %}" class="pull-right">
+		{% csrf_token %}
+		<input type="submit"
+			class="pull-right btn
+				{% if viewing in user.profile.following.all %}
+					btn-primary
+				{% endif %}"
+			value="{% if viewing in user.profile.following.all %}Unfollow{% else %}Follow{%endif %}" />
+	</form>
+{% endif %}

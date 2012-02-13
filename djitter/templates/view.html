@@ -23,17 +23,7 @@
 				</p>
 			</div> <!-- .span7 -->
 			<div class="span2 pull-right">
-				{% if mine %}
-					<a class="btn" href="{% url edit %}">Edit your profile</a>
-				{% else %}
-					<a class="btn {% if following %}btn-primary{% endif %}" href="{% url follow viewing.username %}">
-						{% if following %}
-							{% trans "Unfollow" %}
-						{% else %}
-							{% trans "Follow" %}
-						{%endif %}
-					</a>
-				{% endif %}
+				{% include "snippets/follow.html" %}
 			</div> <!-- .span1 -->
 		</div> <!-- .row -->
 		<div class="row">
