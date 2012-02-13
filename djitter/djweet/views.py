@@ -50,7 +50,7 @@ def edit(req):
 			return redirect('view', req.user.username)
 	else:
 		form = ProfileForm(instance=Profile.objects.get(user=req.user))
-	return render_to_response('EditProfile.html',
+	return render_to_response('edit.html',
 			{ 'form': form
 			, 'chirper': ChirpForm()
 			}

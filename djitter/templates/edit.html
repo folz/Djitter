@@ -1,0 +1,17 @@
+{% extends "loggedin.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<title>Edit Profile | djitter</title>
+<body>
+    <h3>Editing your Profile</h3>
+	<form enctype="multipart/form-data" action="{% url edit %}" method="POST">
+	{% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <p><input type="submit" value="Submit"></p>
+	</form>
+</body>
+{% endblock %}
