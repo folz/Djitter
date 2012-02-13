@@ -11,7 +11,7 @@
 		</a>
 		<ul class="dropdown-menu">
 			<li>
-				<a href="{% url view user.username %}"><strong>{{ user.get_full_name }}</strong><br />View my profile page</a>
+				<a href="{% url view user.username %}"><strong>{{ user.profile.name }}</strong><br />View my profile page</a>
 			</li>
 			<li class="divider"></li>
 			<li>
