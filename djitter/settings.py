@@ -8,7 +8,7 @@ THEME_DIRECTORY = os.path.join(CURRENT_DIRECTORY, "djitter/templates")
 STATIC_DIRECTORY = os.path.join(CURRENT_DIRECTORY, "djitter/static")
 
 # Django registration settings
-ACCOUNT_ACTIVATION_DAYS = 5
+ACCOUNT_ACTIVATION_DAYS = 2
 AUTH_PROFILE_MODULE = "djweet.models.Profile"
 LOGIN_REDIRECT_URL = '/'
 
@@ -139,8 +139,6 @@ INSTALLED_APPS = (
     'registration',
     'djweet',
 )
-
-ACCOUNT_ACTIVATION_DAYS = 2
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

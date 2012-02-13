@@ -10,7 +10,9 @@
 	<div class="span10 offset1">
 		<div class="row well">
 			<div class="span7">
-				<img src="{% gravatar viewing.email 128 %}" class="avatar pull-left" />
+				<a href="http://gravatar.com/emails/">
+					<img src="{% gravatar viewing.email 128 %}" class="avatar pull-left" />
+				</a>
 				
 				<h1 class="fullname">{{ viewing.profile.name }}</h1>
 				<h2 class="username">@{{ viewing.username }}</h2>
