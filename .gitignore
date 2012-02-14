@@ -5,3 +5,4 @@ venv
 database.db
 .svn/
 *.geany
+initial_data.json
