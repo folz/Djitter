@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext, Template, Context
 
-from djweet.models import *
+from chirp.models import *
 
 @login_required
 def home(req):
