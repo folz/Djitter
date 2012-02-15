@@ -1,7 +1,6 @@
 import urllib, hashlib, re
 from django import template
 from django.core.urlresolvers import reverse
-from chirp.views import *
 
 register = template.Library()
 		
@@ -10,8 +9,6 @@ def gravatar(email, size):
 																	  , 'size': str(size)
 																	  })
 																	  
-gravatar = register.filter(gravatar)
-
 
 def chirptag(parser, token):
 	text = token.split_contents()[1]
@@ -23,9 +20,10 @@ class ChirpNode(template.Node):
 		
 	def render(self, context):
 		text = self.text.resolve(context)
-		text = re.sub(r'@([a-zA-Z0-9_]*)', r'<a href = "{% url view \1 %}">@\1</a>', text)
-		text = re.sub(r'#([a-zA-Z0-9_]*)', r'<a href = "{% url discover %}?query=\1">#\1</a>', text)
+		text = re.sub(r'@([a-zA-Z0-9_]*)', r'<a href = "'+reverse('view')+r'\1">@\1</a>', text)
+		text = re.sub(r'#([a-zA-Z0-9_]*)', r'<a href = "'+reverse('discover')+r'?tags=\1">#\1</a>', text)
 		return text
 
 
+gravatar = register.filter(gravatar)
 chirptag = register.tag(chirptag)

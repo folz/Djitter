@@ -10,7 +10,7 @@ urlpatterns = patterns('',
 	
 	url(r'^$', 'chirp.views.home', name='home'),
 	
-	url(r'(?P<username>\w+)$', 'chirp.views.view', name='view'),
+	url(r'user/(?P<username>\w+)*', 'chirp.views.view', name='view'),
 	
 	url(r'edit/$', 'chirp.views.edit', name='edit'),
 	
