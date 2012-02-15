@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.forms import ModelForm, CharField
+from django.forms import ModelForm, CharField, Form
+from taggit.managers import TaggableManager
 
 class Profile(models.Model):
 	""" A Profile keeps track of a User's information """
@@ -24,6 +25,8 @@ class Chirp(models.Model):
 	""" A Chirp is a status update from a User """
 	user = models.ForeignKey(User)
 	text = models.CharField(max_length=140, blank=False, default="")
+	mentions = models.ManyToManyField(User, related_name = "mentions")
+	topics = TaggableManager()
 	date_added = models.DateTimeField(auto_now_add=True)
 	
 	def __unicode__(self):
@@ -47,4 +50,7 @@ class ChirpForm(ModelForm):
 	text = CharField(label="Update status:")
 	class Meta:
 		model = Chirp
-		exclude = ('user',)
+		fields = ('text',)
+		
+class SearchForm(Form):
+    tags = CharField(max_length=60)

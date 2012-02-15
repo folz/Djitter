@@ -9,7 +9,8 @@ from djweet.models import *
 
 @login_required
 def home(req):
-	chirps = Chirp.objects.filter(user__in = list(req.user.profile.following.all()) + [req.user]).order_by('-date_added')
+	chirps = Chirp.objects.filter(user__in = list(req.user.profile.following.all()) + [req.user]) | req.user.mentions.all()
+	chirps = chirps.order_by('-date_added')
 	return render_to_response("index.html",
 			{ 'chirps': chirps
 			, 'chirper': ChirpForm()
@@ -27,7 +28,7 @@ def connect(req):
 
 def view(req, username):
 	user = User.objects.get(username=username)
-	chirps = Chirp.objects.filter(user=user).order_by('-date_added')[:25]
+	chirps = (user.chirp_set.all() | user.mentions.all()).order_by('-date_added')[:25]
 	
 	if req.user.is_authenticated():
 		is_following = user in req.user.profile.following.all()
@@ -36,8 +37,8 @@ def view(req, username):
 	
 	return render_to_response('view.html',
 			{ 'viewing': user
-			, 'chirps': chirps
 			, 'chirper': ChirpForm()
+			, 'chirps': chirps
 			, 'follow': 'Unfollow' if is_following else 'Follow'
 			, 'following': is_following
 			, 'mine': req.user == user
@@ -65,7 +66,30 @@ def cheep(req):
 		if req.POST['text'] != "":
 			chirp = Chirp(user = req.user, text = req.POST['text'])
 			chirp.save()
+			words = req.POST['text'].split()
+			for word in words:
+				if word[0] == '@':
+					matched = User.objects.filter(username=word[1:])
+					if matched: chirp.mentions.add(matched[0])
+				elif word[0] == '#':
+					chirp.topics.add(word[1:].lower())
 	return redirect('home')
+	
+@login_required
+def discover(req):
+	form = SearchForm(req.GET)
+	if req.method == 'GET':
+		if form.is_valid():
+			terms = form.cleaned_data['tags'].lower().replace(',', ' ').split()
+			chirps = Chirp.objects.filter(topics__name__in = terms).distinct()
+			return render_to_response('discover.html', { 'form': form
+													   , 'chirps': chirps
+													   }
+													   , context_instance=RequestContext(req))
+	return render_to_response('discover.html', { 'form': form
+											   , 'chirps': []
+											   }
+											   , context_instance=RequestContext(req))
 
 @login_required
 def follow(req, username):

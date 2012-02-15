@@ -20,6 +20,8 @@ urlpatterns = patterns('',
 	
 	url(r'connect/$', 'djweet.views.connect', name='connect'),
 	
+	url(r'discover/$', 'djweet.views.discover', name='discover'),
+	
 	
 	# django-registration
 	
