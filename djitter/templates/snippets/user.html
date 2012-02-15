@@ -2,7 +2,7 @@
 <li class="user">
 	{% include "snippets/follow.html" %}
 	<a href="{% url view viewing.username %}">
-		<img src="{% gravatar viewing.email 48 %}" class="pull-left avatar" />
+		<img src="{{ viewing.email|gravatar:48 }}" class="pull-left avatar" />
 		<strong>{{ viewing.profile.name }}</strong>
 		<span class="username">@{{ viewing.username }}</span>
 	</a>
