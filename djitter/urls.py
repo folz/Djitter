@@ -8,26 +8,26 @@ urlpatterns = patterns('',
 	
 	# Djitter (?P<link>.{40})
 	
-	url(r'^$', 'djweet.views.home', name='home'),
+	url(r'^$', 'chirp.views.home', name='home'),
 	
-	url(r'(?P<username>\w+)$', 'djweet.views.view', name='view'),
+	url(r'(?P<username>\w+)$', 'chirp.views.view', name='view'),
 	
-	url(r'edit/$', 'djweet.views.edit', name='edit'),
+	url(r'edit/$', 'chirp.views.edit', name='edit'),
 	
-	url(r'publish/$', 'djweet.views.cheep', name='cheep'),
+	url(r'publish/$', 'chirp.views.cheep', name='cheep'),
 	
-	url(r'follow/(?P<username>\w+)/$', 'djweet.views.follow', name='follow'),
+	url(r'follow/(?P<username>\w+)/$', 'chirp.views.follow', name='follow'),
 	
-	url(r'connect/$', 'djweet.views.connect', name='connect'),
+	url(r'connect/$', 'chirp.views.connect', name='connect'),
 	
-	url(r'discover/$', 'djweet.views.discover', name='discover'),
+	url(r'discover/$', 'chirp.views.discover', name='discover'),
 	
 	
 	# django-registration
 	
 	url(r'^accounts/', include('registration.urls')),
 	
-	url(r'^accounts/profile/$', 'djweet.views.back_to_home', name='redir'),
+	url(r'^accounts/profile/$', 'chirp.views.back_to_home', name='redir'),
 	
 	
 	# Django Admin

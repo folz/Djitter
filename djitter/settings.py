@@ -9,7 +9,7 @@ STATIC_DIRECTORY = os.path.join(CURRENT_DIRECTORY, "djitter/static")
 
 # Django registration settings
 ACCOUNT_ACTIVATION_DAYS = 2
-AUTH_PROFILE_MODULE = "djweet.models.Profile"
+AUTH_PROFILE_MODULE = "chirp.models.Profile"
 LOGIN_REDIRECT_URL = '/'
 
 # Email server settings
@@ -138,7 +138,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'registration',
     'taggit',
-    'djweet',
+    'chirp',
 )
 
 # A sample logging configuration. The only tangible logging

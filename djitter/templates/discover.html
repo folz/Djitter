@@ -1,0 +1,27 @@
+{% extends "loggedin.html" %}
+
+{% block title %}{{ block.super }} / Home{% endblock %}
+
+{% block content %}
+
+<div class="row">
+	<div class="span3 offset1 well">
+		<h2>Search Topics</h2>
+		<form action="{% url discover %}" method="GET">
+            {{ form }}
+            <input type="submit" value="Submit">
+            
+		</form>
+	</div>
+	<div class="span6 well">
+		<h3>Results</h3>
+		<ul id="chirps" class="unstyled">
+			<li class="chirp-header"></li>
+			{% for chirp in chirps %}
+				{% include "snippets/chirp.html" %}
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+
+{% endblock %}

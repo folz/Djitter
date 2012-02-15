@@ -1,7 +1,7 @@
 import urllib, hashlib, re
 from django import template
 from django.core.urlresolvers import reverse
-from djweet.views import *
+from chirp.views import *
 
 register = template.Library()
 
