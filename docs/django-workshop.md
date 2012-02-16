@@ -6,10 +6,11 @@ We want to be able to do a few things:
 
 1. View a homepage feed of all the chirps of everyone I'm following
 2. View individual Djitter users' profiles
-3. Edit our profile
+3. Edit my profile
 4. Publish chirps
 5. Follow other Djitter users
 6. See a list of all users on site
+7. Search for hashtags
 
 ## Url patterns
 
