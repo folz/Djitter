@@ -2,8 +2,7 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response, redirect
-from django.template import RequestContext, Template, Context
+from django.shortcuts import render, redirect
 
 from chirp.models import *
 
@@ -11,40 +10,26 @@ from chirp.models import *
 def home(req):
 	chirps = Chirp.objects.filter(user__in = list(req.user.profile.following.all()) + [req.user]) | req.user.mentions.all()
 	chirps = chirps.order_by('-date_added')
-	
-	return render_to_response("index.html",
-			{ 'chirps': chirps
-			, 'chirper': ChirpForm()
-			}
-		, context_instance = RequestContext(req))
+	chirper = ChirpForm()
+	return render(req, "index.html", locals())
 
 @login_required
 def connect(req):
 	users = User.objects.all()
-	return render_to_response("connect.html",
-			{ 'users': users
-			, 'chirper': ChirpForm()
-			}
-		, context_instance = RequestContext(req))
+	chirper = ChirpForm()
+	return render(req, "connect.html", locals())
 
 def view(req, username):
-	user = User.objects.get(username=username)
-	chirps = (user.chirp_set.all() | user.mentions.all()).order_by('-date_added')[:25]
+	viewing = User.objects.get(username=username)
+	chirps = (viewing.chirp_set.all() | viewing.mentions.all()).order_by('-date_added')[:25]
 	
 	if req.user.is_authenticated():
-		is_following = user in req.user.profile.following.all()
+		is_following = viewing in req.user.profile.following.all()
 	else:
 		is_following = False
 	
-	return render_to_response('view.html',
-			{ 'viewing': user
-			, 'chirper': ChirpForm()
-			, 'chirps': chirps
-			, 'follow': 'Unfollow' if is_following else 'Follow'
-			, 'following': is_following
-			, 'mine': req.user == user
-			}
-		, context_instance = RequestContext(req))
+	chirper = ChirpForm()
+	return render(req, 'view.html', locals())
 
 @login_required
 def edit(req):
@@ -55,11 +40,8 @@ def edit(req):
 			return redirect('view', req.user.username)
 	else:
 		form = ProfileForm(instance=Profile.objects.get(user=req.user))
-	return render_to_response('edit.html',
-			{ 'form': form
-			, 'chirper': ChirpForm()
-			}
-		, context_instance=RequestContext(req))
+	chirper = ChirpForm()
+	return render(req, 'edit.html', locals())
 
 @login_required
 def cheep(req):
@@ -79,18 +61,12 @@ def cheep(req):
 @login_required
 def discover(req):
 	form = SearchForm(req.GET)
+	chirps = []
 	if req.method == 'GET':
 		if form.is_valid():
 			terms = form.cleaned_data['tags'].lower().replace(',', ' ').split()
 			chirps = Chirp.objects.filter(topics__name__in = terms).distinct()
-			return render_to_response('discover.html', { 'form': form
-													   , 'chirps': chirps
-													   }
-													   , context_instance=RequestContext(req))
-	return render_to_response('discover.html', { 'form': form
-											   , 'chirps': []
-											   }
-											   , context_instance=RequestContext(req))
+	return render(req, 'discover.html', locals())
 
 @login_required
 def follow(req, username):
