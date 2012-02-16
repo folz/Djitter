@@ -11,6 +11,7 @@ from chirp.models import *
 def home(req):
 	chirps = Chirp.objects.filter(user__in = list(req.user.profile.following.all()) + [req.user]) | req.user.mentions.all()
 	chirps = chirps.order_by('-date_added')
+	
 	return render_to_response("index.html",
 			{ 'chirps': chirps
 			, 'chirper': ChirpForm()

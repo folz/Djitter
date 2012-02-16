@@ -1,0 +1,55 @@
+<h2>Setting up</h2>
+
+<h2>Design application flow</h2>
+
+<p>We want to be able to do a few things:</p>
+
+<ol>
+<li>View a homepage feed of all the chirps of everyone I'm following</li>
+<li>View individual Djitter users' profiles</li>
+<li>Edit our profile</li>
+<li>Publish chirps</li>
+<li>Follow other Djitter users</li>
+<li>See a list of all users on site</li>
+<li>@mentions and #hashtags</li>
+</ol>
+
+<h2>Url patterns</h2>
+
+<pre><code>url(r'^$', 'chirp.views.home', name='home'),
+
+url(r'(?P&lt;username&gt;\w+)$', 'chirp.views.view', name='view'),
+
+url(r'edit/$', 'chirp.views.edit', name='edit'),
+
+url(r'publish/$', 'chirp.views.cheep', name='cheep'),
+
+url(r'follow/(?P&lt;username&gt;\w+)/$', 'chirp.views.follow', name='follow'),
+
+url(r'connect/$', 'chirp.views.connect', name='connect'),
+
+url(r'discover/$', 'chirp.views.discover', name='discover'),
+</code></pre>
+
+<h2>Models!</h2>
+
+<pre><code>from django.db import models
+from django.contrib.auth.models import User
+
+class Profile(models.Model):
+    """ A Profile keeps track of a User's information """
+
+    user = models.ForeignKey(User, unique=True)
+    name = models.CharField(max_length=30, blank=True, default="")
+    bio = models.TextField(max_length=200, blank=True, default="")
+    location = models.CharField(max_length=30, blank=True, default="")
+    url = models.CharField(max_length=100, blank=True, default="")
+    date_added = models.DateField(auto_now_add=True)
+    following = models.ManyToManyField(User, related_name = "followers")
+
+    def __unicode__(self):
+        return self.name
+
+# Automatically create a Profile for a User if the User doesn't have one.
+User.profile = property(lambda u: Profile.objects.get_or_create(user=u)[0])
+</code></pre>
